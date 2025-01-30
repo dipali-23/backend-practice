@@ -1,62 +1,14 @@
-// const StudentService = require('../services/studentService');
-
-// class StudentController {
-//   static async createStudent(req, res) {
-//     try {
-//       const student = await StudentService.createStudent(req.body);
-//       res.status(201).json({ message: 'Student created successfully', student });
-//     } catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
-
-//   static async getAllStudents(req, res) {
-//     try {
-//       const students = await StudentService.getAllStudents();
-//       res.status(200).json({ students });
-//     } catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
-
-//   static async getStudentById(req, res) {
-//     try {
-//       const student = await StudentService.getStudentById(req.params.id);
-//       res.status(200).json({ student });
-//     } catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
-
-//   static async updateStudent(req, res) {
-//     try {
-//       const student = await StudentService.updateStudent(req.params.id, req.body);
-//       res.status(200).json({ message: 'Student updated successfully', student });
-//     } catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
-
-//   static async deleteStudent(req, res) {
-//     try {
-//       const response = await StudentService.deleteStudent(req.params.id);
-//       res.status(200).json(response);
-//     } catch (error) {
-//       res.status(500).json({ message: error.message });
-//     }
-//   }
-// }
-
-// module.exports = StudentController;
-
-
-
 const { sendResponse, sendErrorResponse } = require('../utils/response');
 const StudentService = require('../services/studentService');
+const studentValidationSchema = require('../utils/studentValidation');
 
 class StudentController {
   static async createStudent(req, res) {
     try {
+      const { error } = studentValidationSchema.validate(req.body);
+      if (error) {
+        return sendErrorResponse(res, error, 400);
+      }
       const student = await StudentService.createStudent(req.body);
       sendResponse(res, 201, 'Student created successfully', student);
     } catch (error) {
@@ -79,9 +31,9 @@ class StudentController {
       if (student) {
         sendResponse(res, 200, 'Student retrieved successfully', student);
       }
-      //  else {
-      //   sendResponse(res, 404, 'Student not found');
-      // }
+      else {
+        return sendErrorResponse(res, new Error('Student not found'), 404);
+      }
     } catch (error) {
       sendErrorResponse(res, error);
     }
@@ -89,10 +41,15 @@ class StudentController {
 
   static async updateStudent(req, res) {
     try {
+      const { error } = studentValidationSchema.validate(req.body);
+      if (error) {
+        return sendErrorResponse(res, error, 400);
+      }
       const student = await StudentService.updateStudent(req.params.id, req.body);
+
       sendResponse(res, 200, 'Student updated successfully', student);
     } catch (error) {
-      sendErrorResponse(res, error);
+      return sendErrorResponse(res, new Error('Student not found'), 404);
     }
   }
 
@@ -101,7 +58,7 @@ class StudentController {
       const response = await StudentService.deleteStudent(req.params.id);
       sendResponse(res, 200, 'Student deleted successfully', response);
     } catch (error) {
-      sendErrorResponse(res, error);
+      return sendErrorResponse(res, new Error('Student not found'), 404);
     }
   }
 }

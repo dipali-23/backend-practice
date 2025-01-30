@@ -22,7 +22,6 @@ class StudentService {
   static async getStudentById(id) {
     try {
       const student = await Student.findByPk(id);
-       if (!student) throw new Error('Student not found');
       return student;
     } catch (error) {
       throw new Error('Error fetching student: ' + error.message);
