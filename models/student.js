@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/sequelize');
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/sequelize.js';
 
 const Student = sequelize.define('Student', {
   id: {
@@ -25,9 +25,9 @@ const Student = sequelize.define('Student', {
     allowNull: false,
   },
   password: {
-    type:DataTypes.STRING,
-    allowNull:false,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
 });
 
-module.exports = Student;
+export default Student;

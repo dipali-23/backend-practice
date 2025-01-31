@@ -1,5 +1,4 @@
-
-const Joi = require('joi');
+import Joi from 'joi';
 
 const studentValidationSchema = Joi.object({
   name: Joi.string().min(2).max(50).required().messages({
@@ -31,4 +30,4 @@ const studentValidationSchema = Joi.object({
   }),
 });
 
-module.exports = studentValidationSchema;
+export default studentValidationSchema;

@@ -1,7 +1,7 @@
-const { Sequelize } = require('sequelize');
-const config = require('./config'); 
+import { Sequelize } from 'sequelize';
+import config from './db.js'; 
 
-const sequelize = new Sequelize(config.development); 
+const sequelize = new Sequelize(config.development);
 
 sequelize.authenticate()
   .then(() => {
@@ -11,4 +11,4 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', error);
   });
 
-module.exports = sequelize;
+export default sequelize;

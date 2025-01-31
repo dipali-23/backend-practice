@@ -1,6 +1,7 @@
-require('dotenv').config();
+import { config } from 'dotenv';
+config();
 
-module.exports = {
+export default {
   development: {
     host: process.env.DB_HOST,
     username: process.env.DB_USER,

@@ -1,8 +1,9 @@
-// app.js
-const express = require('express');
-const sequelize = require('./config/sequelize');
-const studentRoutes = require('./routes/studentRoutes');
-require('dotenv').config();
+import express from 'express';
+import sequelize from './config/sequelize.js';  
+import studentRoutes from './routes/student.js';  
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
