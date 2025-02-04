@@ -1,12 +1,17 @@
+// db.js
 import { config } from 'dotenv';
 config();
 
-export default {
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_DIALECT } = process.env;
+
+const dbConfig = {
   development: {
-    host: process.env.DB_HOST,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    dialect: process.env.DB_DIALECT,
+    host: DB_HOST,
+    username: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+    dialect: DB_DIALECT,
   },
 };
+
+export default dbConfig;

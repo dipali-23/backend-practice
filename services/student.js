@@ -5,7 +5,7 @@ export const createStudent = async (data) => {
     const student = await Student.create(data);
     return student;
   } catch (error) {
-    throw new Error('Error creating student: ' + error.message);
+    throw new Error('An error occurred while creating student (service)' + error.message);
   }
 };
 
@@ -14,7 +14,7 @@ export const getAllStudents = async () => {
     const students = await Student.findAll();
     return students;
   } catch (error) {
-    throw new Error('Error fetching students: ' + error.message);
+    throw new Error('An error occurred while fetching students (service) :' + error.message);
   }
 };
 
@@ -23,7 +23,7 @@ export const getStudentById = async (id) => {
     const student = await Student.findByPk(id);
     return student;
   } catch (error) {
-    throw new Error('Error fetching student: ' + error.message);
+    throw new Error('An error occurred while fetching student (service): ' + error.message);
   }
 };
 
@@ -34,7 +34,7 @@ export const updateStudent = async (id, data) => {
     await student.update(data);
     return student;
   } catch (error) {
-    throw new Error('Error updating student: ' + error.message);
+    throw new Error('An error occurred while updating student (service): ' + error.message);
   }
 };
 
@@ -45,6 +45,6 @@ export const deleteStudent = async (id) => {
     await student.destroy();
     return { message: 'Student deleted successfully' };
   } catch (error) {
-    throw new Error('Error deleting student: ' + error.message);
+    throw new Error('An error occurred while deleting student (service) : ' + error.message);
   }
 };

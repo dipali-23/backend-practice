@@ -1,7 +1,7 @@
 import { sendResponse, sendErrorResponse } from '../utils/response.js';
 import { createStudent, getAllStudents, getStudentById, updateStudent, deleteStudent } from '../services/student.js';
-import studentValidationSchema from '../utils/studentValidation.js';
-import { HTTP_STATUS_CODES } from '../utils/statusCodes.js';  // Import status codes
+import studentValidationSchema from '../utils/validators/student.js';
+import { HTTP_STATUS_CODES } from '../utils/constants/status-code.js';  // Import status codes
 
 export const createStudentController = async (req, res) => {
   try {
@@ -12,16 +12,16 @@ export const createStudentController = async (req, res) => {
     const student = await createStudent(req.body);
     sendResponse(res, HTTP_STATUS_CODES.CREATED, 'Student created successfully', student);
   } catch (error) {
-    sendErrorResponse(res, error.message || 'Error creating student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    sendErrorResponse(res, error.message || 'An error occurred while creating student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
   }
 };
 
 export const getAllStudentsController = async (req, res) => {
   try {
     const students = await getAllStudents();
-    sendResponse(res, HTTP_STATUS_CODES.OK, 'Fetched all students successfully', students);
+    sendResponse(res, HTTP_STATUS_CODES.OK, 'Students fetched successfully', students);
   } catch (error) {
-    sendErrorResponse(res, error.message || 'Error fetching students', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    sendErrorResponse(res, error.message || 'An error occurred while fetching students', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -33,7 +33,7 @@ export const getStudentByIdController = async (req, res) => {
     }
     sendResponse(res, HTTP_STATUS_CODES.OK, 'Student retrieved successfully', student);
   } catch (error) {
-    sendErrorResponse(res, error.message || 'Error retrieving student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    sendErrorResponse(res, error.message || 'An error occurred while retrieving student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -50,7 +50,7 @@ export const updateStudentController = async (req, res) => {
     }
     sendResponse(res, HTTP_STATUS_CODES.OK, 'Student updated successfully', student);
   } catch (error) {
-    sendErrorResponse(res, error.message || 'Error updating student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    sendErrorResponse(res, error.message || 'An error occurred while updating student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
   }
 };
 
@@ -62,6 +62,6 @@ export const deleteStudentController = async (req, res) => {
     }
     sendResponse(res, HTTP_STATUS_CODES.OK, 'Student deleted successfully', response);
   } catch (error) {
-    sendErrorResponse(res, error.message || 'Error deleting student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
+    sendErrorResponse(res, error.message || 'An error occurred while deleting student', HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
   }
 };

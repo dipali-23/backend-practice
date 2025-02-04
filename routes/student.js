@@ -1,4 +1,7 @@
 import express from 'express';
+import { verifyToken } from '../middleware/auth.js';
+import {authorizeRole} from '../middleware/role.js';
+
 import { 
   createStudentController, 
   getAllStudentsController, 
@@ -9,19 +12,15 @@ import {
 
 const router = express.Router();
 
-// Create a new student
-router.post('/', createStudentController);
+router.post('/',verifyToken, authorizeRole('admin'),createStudentController);// Create a new student
 
-// Get all students
-router.get('/', getAllStudentsController);
+router.get('/',verifyToken, getAllStudentsController);// Get all students
 
-// Get student by ID
-router.get('/:id', getStudentByIdController);
+router.get('/:id',verifyToken, getStudentByIdController);// Get all students
 
-// Update student by ID
-router.put('/:id', updateStudentController);
+router.put('/:id', verifyToken,authorizeRole('admin'),updateStudentController);// Update student by ID
 
-// Delete student by ID
-router.delete('/:id', deleteStudentController);
+router.delete('/:id',authorizeRole('admin'), deleteStudentController);// Delete student by ID
+
 
 export default router;
